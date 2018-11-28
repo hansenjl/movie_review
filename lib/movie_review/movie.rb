@@ -1,0 +1,2 @@
+class MovieReview::Movie
+end
