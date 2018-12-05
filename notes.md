@@ -1,0 +1,1 @@
+index_page = Nokogiri::HTML(open(""))
