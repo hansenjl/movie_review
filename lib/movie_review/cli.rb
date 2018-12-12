@@ -10,7 +10,7 @@ class MovieReview::CLI
     #list the top 100 movies
     list_movies
     puts "Please select a movie you want more info about by choosing a number 1-100"
-    get_movie_method  #asked for input and reported a 'teaser'
+    get_movie_method_in_loop_format  #asked for input and reported a 'teaser'
 
 
     # ask for input
@@ -44,11 +44,26 @@ class MovieReview::CLI
       end
   end
 
+  def get_movie_method_in_loop_format
+      input = gets.strip
+      until input.to_i.between?(1,100) || input == "exit"
+        puts "Sorry! I didn't understand that command!"
+        input = gets.strip
+      end
+      if input != "exit"
+        index =  input.to_i - 1
+        movie = @sorted_movies[index]
+        puts "#{movie.title}:"
+        puts "Rotten Tomatoes was liked by #{movie.rating} of people "
+        puts "#{movie.critic}"
+        want_more_info(movie)
+      end
+  end
+
   def want_more_info(movie)
     puts "Read more (Y/N)?"
     input = "nil"
     until input == "Y" || input == "N"
-       puts "type Y(yes) or N(no) "
       input = gets.strip.upcase
     end
     if input == "y"
@@ -56,11 +71,6 @@ class MovieReview::CLI
     else
       puts "you ended"
     end
-  end
-
-  def list_review
-     #if movie's details have NOT been scraped,
-      #scrape
   end
 
 
