@@ -1,6 +1,8 @@
 class MovieReview::Movie
   attr_accessor :title, :rating, :critic, :url, :directed_by
 
+
+
   @@all = []
 
   def initialize(att_hash)

@@ -5,7 +5,7 @@ class MovieReview::Scraper
 
       array_of_movies = index_page.css("div.countdown-item")
 
-      array_of_movies.each do |movie_card|
+      array_of_movies[0...100].each do |movie_card|
         attributes = {
           title: movie_card.css("div.article_movie_title a")[0].children.text ,
           url: movie_card.css("div.article_movie_title a")[0].attributes['href'].value,
@@ -22,5 +22,8 @@ class MovieReview::Scraper
   end
 
   def self.scrape_reviews(movie)
+    review_page = Nokogiri::HTML(open(movie.url))
+
+
   end
 end
