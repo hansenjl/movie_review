@@ -1,8 +1,6 @@
 class MovieReview::Movie
   attr_accessor :title, :rating, :critic, :url, :directed_by
-
-
-
+  attr_reader :reviews
   @@all = []
 
   def initialize(att_hash)
@@ -12,6 +10,7 @@ class MovieReview::Movie
     att_hash.each do |key, value|
       self.send("#{key}=", value)
     end
+    @reviews = []
     self.save
   end
 
@@ -22,6 +21,11 @@ class MovieReview::Movie
 
   def self.all
     @@all
+  end
+
+  def add_review(rev)
+    @reviews << rev
+    rev.movie = self
   end
 
 

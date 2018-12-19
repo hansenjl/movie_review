@@ -21,9 +21,28 @@ class MovieReview::Scraper
 
   end
 
-  def self.scrape_reviews(movie)
-    review_page = Nokogiri::HTML(open(movie.url))
+  def self.scrape_reviews(movie_object)
 
+    review_page = Nokogiri::HTML(open(movie_object.url))
+    reviews = review_page.css("div.top_critic") #array of reviews
+
+    reviews.each do |review_html|
+       #instantiate a new review
+       ro = MovieReview::Review.new
+      # ro stands for review object
+      # associate that review with this movie
+      #ro.movie = movie_object
+      # set any review attributes
+
+      ro.quote = review_html.css("div.media div.media-body p").text.strip
+
+      ro.author = review_html.css("div.review_source div.media-body a.unstyled").text
+
+      ro.press = review_html.css("div.review_source div.media-body a.subtle").text
+      # add this review to movie.reviews
+      #movie_object.reviews << ro
+      movie_object.add_review(ro)
+    end
 
   end
 end

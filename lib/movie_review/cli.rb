@@ -36,6 +36,7 @@ class MovieReview::CLI
         puts "Rotten Tomatoes was liked by #{movie.rating} of people "
         puts "#{movie.critic}"
         want_more_info(movie)
+
       elsif input == "exit"
           #allow this method to end
       else
@@ -57,17 +58,24 @@ class MovieReview::CLI
         puts "Rotten Tomatoes was liked by #{movie.rating} of people "
         puts "#{movie.critic}"
         want_more_info(movie)
+        puts "Please select a movie you want more info about by choosing a number 1-100  or type 'exit' to Exit"
+        get_movie_method_in_loop_format
       end
   end
 
   def want_more_info(movie)
     puts "Read more (Y/N)?"
-    input = "nil"
-    until input == "Y" || input == "N"
+    input = gets.strip.upcase
+    until  ["Y","N","YES","NO"].include?(input)
+      puts "Please type Y or N"
       input = gets.strip.upcase
     end
-    if input == "y"
+    if input == "Y" || input == "YES"
+      puts "... fetching the reviews \n\n"
       MovieReview::Scraper.scrape_reviews(movie)
+      movie.reviews.each do |review|
+        puts "#{review.author} from the #{review.press} says #{review.quote}.\n\n"
+      end
     else
       puts "you ended"
     end
