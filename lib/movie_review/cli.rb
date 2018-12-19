@@ -63,11 +63,19 @@ class MovieReview::CLI
   def want_more_info(movie)
     puts "Read more (Y/N)?"
     input = "nil"
-    until input == "Y" || input == "N"
+    input = gets.strip.upcase
+    until input == "Y" || input == "N" || input == "YES" || input == "NO"
+      puts "please enter YES or NO"
       input = gets.strip.upcase
     end
-    if input == "y"
-      MovieReview::Scraper.scrape_reviews(movie)
+    if input == "Y" || input == "YES"
+      puts "... fetching reviews for #{movie.title}\n\n"
+      MovieReview::Scraper.scrape_reviews(movie) #scrape reviews
+      puts "Critic Reviews for #{movie.title}:\n\n"
+      movie.reviews.each do |rev|
+        puts "#{rev.author} from the #{rev.press} says: #{rev.quote}\n\n"
+      end
+
     else
       puts "you ended"
     end

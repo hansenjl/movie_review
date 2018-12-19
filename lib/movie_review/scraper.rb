@@ -24,6 +24,15 @@ class MovieReview::Scraper
   def self.scrape_reviews(movie)
     review_page = Nokogiri::HTML(open(movie.url))
 
-
+    movie.audience_score = review_page.css("div.meter-value span.superPageFontColor").text
+    revs = review_page.css("div#reviews div.top_critic")
+    revs.each do |review|
+      r = MovieReview::Review.new
+      r.quote = review.css("div.media div.media-body p").text.strip
+      r.author =  review.css("div.review_source div.media-body a.articleLink")[0].text
+      r.movie = movie
+      r.press = review.css("div.review_source div.media-body a.subtle").text
+      movie.reviews << r
+    end
   end
 end

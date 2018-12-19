@@ -1,5 +1,5 @@
 class MovieReview::Movie
-  attr_accessor :title, :rating, :critic, :url, :directed_by
+  attr_accessor :title, :rating, :critic, :url, :directed_by, :audience_score, :reviews
 
 
 
@@ -12,6 +12,7 @@ class MovieReview::Movie
     att_hash.each do |key, value|
       self.send("#{key}=", value)
     end
+    @reviews = []
     self.save
   end
 
