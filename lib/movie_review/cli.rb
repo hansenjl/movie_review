@@ -41,12 +41,13 @@ class MovieReview::CLI
           #allow this method to end
       else
         puts "Sorry! I didn't understand that command"
-        get_movie_method   #recursion
+        get_movie_method_in_loop_format   #recursion
       end
   end
 
   def get_movie_method_in_loop_format
-      input = gets.strip
+    while true
+      input = gets.strip.downcase
       until input.to_i.between?(1,100) || input == "exit"
         puts "Sorry! I didn't understand that command!"
         input = gets.strip
@@ -59,8 +60,11 @@ class MovieReview::CLI
         puts "#{movie.critic}"
         want_more_info(movie)
         puts "Please select a movie you want more info about by choosing a number 1-100  or type 'exit' to Exit"
-        get_movie_method_in_loop_format
+       #get_movie_method_in_loop_format
+      elsif input == "exit"
+        exit 
       end
+    end
   end
 
   def want_more_info(movie)
