@@ -1,5 +1,5 @@
 class MovieReview::Movie
-  attr_accessor :title, :rating, :critic, :url, :directed_by
+  attr_accessor :title, :rating, :critic, :url, :directed_by, :id
   attr_reader :reviews
   @@all = []
 

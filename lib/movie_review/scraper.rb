@@ -5,24 +5,22 @@ class MovieReview::Scraper
 
       array_of_movies = index_page.css("div.countdown-item")
 
-      array_of_movies[0...100].each do |movie_card|
+      array_of_movies[0...100].each_with_index do |movie_card, index|
         attributes = {
           title: movie_card.css("div.article_movie_title a")[0].children.text ,
           url: movie_card.css("div.article_movie_title a")[0].attributes['href'].value,
           rating: movie_card.css('span.tMeterScore').text,
-          critic: movie_card.css("div.critics-consensus").text
+          critic: movie_card.css("div.critics-consensus").text,
+          id: index + 1
           # synopsis: ,
           # starring: ,
           # directed_by: ,
         }
         movie = MovieReview::Movie.new(attributes)
       end
-
-
   end
 
   def self.scrape_reviews(movie_object)
-
     review_page = Nokogiri::HTML(open(movie_object.url))
     reviews = review_page.css("div.top_critic") #array of reviews
 
